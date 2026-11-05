@@ -1,0 +1,27 @@
+{
+  "note": "Fictional registration dates standing in for RDAP.",
+  "bootstrap": {
+    "services": [
+      [
+        [
+          "example"
+        ],
+        [
+          "https://rdap.demo.invalid/"
+        ]
+      ]
+    ]
+  },
+  "domains": {
+    "abuja-seating.example": "2012-03-04T00:00:00Z",
+    "garki-office-furniture.example": "2018-06-10T00:00:00Z",
+    "jabi-workspace.example": "2026-03-01T00:00:00Z",
+    "maitama-interiors.example": "2017-02-01T00:00:00Z",
+    "gwarinpa-furniture.example": "2024-05-20T00:00:00Z",
+    "kubwa-seats.example": "2020-01-15T00:00:00Z",
+    "lagos-seating.example": "2009-08-01T00:00:00Z",
+    "kano-office-supplies.example": "2016-11-11T00:00:00Z",
+    "ibadan-furniture.example": "2015-04-04T00:00:00Z",
+    "wuse-seating-gallery.example": "2019-09-09T00:00:00Z"
+  }
+}

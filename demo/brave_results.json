@@ -1,0 +1,194 @@
+{
+  "note": "Fictional demo fixtures standing in for Brave Search. Matched by substring, first match wins.",
+  "queries": [
+    {
+      "match": "Wuse Seating Gallery",
+      "results": [
+        {
+          "title": "Wuse Seating Gallery | Office chair showroom in Wuse, Abuja",
+          "url": "https://wuse-seating-gallery.example/",
+          "description": "Office chair showroom in Wuse, Abuja."
+        }
+      ]
+    },
+    {
+      "match": "Utako Seating Hub",
+      "results": [
+        {
+          "title": "Unrelated shop",
+          "url": "https://other-shop.example/",
+          "description": "A different business."
+        }
+      ]
+    },
+    {
+      "match": "suppliers in",
+      "results": [
+        {
+          "title": "Abuja Seating Co | Office Chairs in Wuse II, Abuja",
+          "url": "https://abuja-seating.example/",
+          "description": "Showroom in Wuse II, Abuja. Ergonomic and executive office chairs."
+        },
+        {
+          "title": "Office Chairs - Garki Office Furniture",
+          "url": "https://garki-office-furniture.example/collections/office-chairs",
+          "description": "Office chairs and desks, Garki Area 11, Abuja."
+        },
+        {
+          "title": "Office furniture suppliers in Abuja | Demo Business Listings",
+          "url": "https://demo-directory.example/business-listings/office-furniture-abuja",
+          "description": "Listings of office furniture suppliers in Abuja."
+        },
+        {
+          "title": "Executive office chair - Demo Marketplace",
+          "url": "https://demo-marketplace.example/abuja/office-chair-1",
+          "description": "Executive office chair ₦95,000, Abuja. Seller on the marketplace."
+        },
+        {
+          "title": "Used office chairs - Demo Marketplace",
+          "url": "https://demo-marketplace.example/abuja/office-chair-2",
+          "description": "Used office chairs, make an offer."
+        },
+        {
+          "title": "Abuja Chairs Shop (@abuja_chairs_shop)",
+          "url": "https://demo-social.example/abuja_chairs_shop",
+          "description": "Office chairs in Abuja. DM to order."
+        }
+      ]
+    },
+    {
+      "match": "showroom",
+      "results": [
+        {
+          "title": "Abuja Seating Co | Office Chairs in Wuse II, Abuja",
+          "url": "https://abuja-seating.example/",
+          "description": "Showroom in Wuse II, Abuja. Ergonomic and executive office chairs."
+        },
+        {
+          "title": "Jabi Workspace | Workstations and chairs",
+          "url": "https://jabi-workspace.example/",
+          "description": "Workstations and chairs for Jabi offices, Abuja."
+        }
+      ]
+    },
+    {
+      "match": "Wuse",
+      "results": [
+        {
+          "title": "Abuja Seating Co | Office Chairs in Wuse II, Abuja",
+          "url": "https://abuja-seating.example/",
+          "description": "Showroom in Wuse II, Abuja. Ergonomic and executive office chairs."
+        }
+      ]
+    },
+    {
+      "match": "Garki",
+      "results": [
+        {
+          "title": "Office Chairs - Garki Office Furniture",
+          "url": "https://garki-office-furniture.example/collections/office-chairs",
+          "description": "Office chairs and desks, Garki Area 11, Abuja."
+        }
+      ]
+    },
+    {
+      "match": "office furniture store",
+      "results": [
+        {
+          "title": "Maitama Interiors | Sofas and living room furniture",
+          "url": "https://maitama-interiors.example/",
+          "description": "Luxury sofas, Maitama, Abuja."
+        },
+        {
+          "title": "Gwarinpa Furniture Shop",
+          "url": "https://gwarinpa-furniture.example/",
+          "description": "Furniture shop in Gwarinpa, Abuja."
+        }
+      ]
+    },
+    {
+      "match": "store",
+      "results": [
+        {
+          "title": "Jabi Workspace | Workstations and chairs",
+          "url": "https://jabi-workspace.example/",
+          "description": "Workstations and chairs for Jabi offices, Abuja."
+        },
+        {
+          "title": "Kubwa Seats | Chairs for homes and offices",
+          "url": "https://kubwa-seats.example/",
+          "description": "Chairs for homes and offices in Kubwa."
+        }
+      ]
+    },
+    {
+      "match": "Jabi",
+      "results": [
+        {
+          "title": "Jabi Workspace | Workstations and chairs",
+          "url": "https://jabi-workspace.example/",
+          "description": "Workstations and chairs for Jabi offices, Abuja."
+        }
+      ]
+    }
+  ],
+  "default": [
+    {
+      "title": "Lagos Seating Ltd | Office chairs made in Ikeja",
+      "url": "https://lagos-seating.example/",
+      "description": "Office chairs made in Lagos. We deliver nationwide, including Abuja."
+    },
+    {
+      "title": "Office chair range | Kano Office Supplies",
+      "url": "https://kano-office-supplies.example/office-chair-range",
+      "description": "Office supplies in Kano."
+    },
+    {
+      "title": "Ibadan Furniture Works",
+      "url": "https://ibadan-furniture.example/",
+      "description": "Furniture makers in Ibadan."
+    },
+    {
+      "title": "Kubwa Seats | Chairs for homes and offices",
+      "url": "https://kubwa-seats.example/",
+      "description": "Chairs for homes and offices in Kubwa."
+    },
+    {
+      "title": "Executive office chair - Demo Marketplace",
+      "url": "https://demo-marketplace.example/abuja/office-chair-1",
+      "description": "Executive office chair ₦95,000, Abuja. Seller on the marketplace."
+    }
+  ],
+  "independent": [
+    {
+      "match": "Abuja Seating Co",
+      "results": [
+        {
+          "title": "Abuja Seating Co - Office furniture, Wuse II | Demo Business Listings",
+          "url": "https://demo-directory.example/company/abuja-seating-co",
+          "description": "Abuja Seating Co, 14 Aminu Kano Crescent, Wuse II, Abuja. Tel +234 803 555 0101. Delivers across Abuja."
+        }
+      ]
+    },
+    {
+      "match": "Lagos Seating Ltd",
+      "results": [
+        {
+          "title": "Lagos Seating Ltd - Ikeja | Demo Business Listings",
+          "url": "https://demo-directory.example/company/lagos-seating",
+          "description": "Lagos Seating Ltd, 7 Allen Avenue, Ikeja, Lagos. Tel +234 803 555 0107"
+        }
+      ]
+    },
+    {
+      "match": "Wuse Seating Gallery",
+      "results": [
+        {
+          "title": "Wuse Seating Gallery | Demo Business Listings",
+          "url": "https://demo-directory.example/company/wuse-seating-gallery",
+          "description": "Office seating in Wuse II."
+        }
+      ]
+    }
+  ]
+}

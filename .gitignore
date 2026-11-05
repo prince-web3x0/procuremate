@@ -1,0 +1,30 @@
+# secrets: never commit
+.env
+.env.*
+!.env.example
+secrets.env
+*.secrets
+.procuremate/
+.switch/
+
+# python / node
+__pycache__/
+*.pyc
+node_modules/
+
+# generated tool output
+out/
+
+# agent working copies of tools/ (synced by tools/sync_to_agents.py)
+scout/tools/
+vera/tools/
+
+# local scratch output from earlier agent runs (may contain real supplier data)
+scratch_sc/
+replays/
+*.replay.json
+
+# Kept on disk, not uploaded
+local-only/
+PHASE0_REPORT.md
+ProcureMate_Latest_Build_Specification_UPDATED.json
