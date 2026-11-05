@@ -1,5 +1,7 @@
 # ProcureMate
 
+[![tests](https://github.com/prince-web3x0/procuremate/actions/workflows/tests.yml/badge.svg)](https://github.com/prince-web3x0/procuremate/actions/workflows/tests.yml)
+
 Built for the Flip the Switch hackathon (Best Business Workflow track).
 
 ProcureMate helps a buyer in Nigeria find and check Nigerian suppliers for an order. Two AI agents do the research in a shared chat room. The buyer makes every decision.
@@ -93,7 +95,7 @@ It was tested on Windows 11 only. First-time setup takes a while because of down
 - For the full chat demo: Docker Desktop, Switch Console (tested: Canary 0.41.0-canary.2 on Windows 11), curl and npx (needed by the Switch setup), and the Claude Code command-line tool, signed in. The agents run on Claude Code, so your plan's usage limits apply.
 - For real mode: a Brave Search API key.
 
-Tested on Windows 11 only. The GitHub workflow is meant to run the tests and demo mode on Ubuntu with Python 3.10 and 3.12; it has not been seen passing yet.
+The full chat was tested on Windows 11 only. The tests and demo mode passed on Ubuntu with Python 3.10 and 3.12 in GitHub Actions (run of 2026-11-05).
 
 ## Real mode with a key
 
