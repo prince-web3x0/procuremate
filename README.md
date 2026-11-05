@@ -8,32 +8,32 @@ ProcureMate helps a buyer in Nigeria find and check Nigerian suppliers for an or
 
 ## The problem
 
-Finding a supplier you can trust takes hours. Suppliers in Nigeria are often hard to check online, and websites can be wrong or fake.
+Finding a supplier you can trust takes hours. Suppliers in Nigeria are often hard to check online.
 
 ## How it works
 
 1. The buyer posts a request in the chat room, such as "20 office chairs delivered to Abuja, from Nigerian suppliers".
 2. Scout searches the web and reads each supplier's own website.
 3. Scout hands the best candidates to Vera in the same room.
-4. Vera cross-checks them and says what looks solid and what is still unknown.
+4. Vera cross-checks them and says what is solid and what is unknown.
 5. The buyer reads the results, asks questions, and decides.
 6. Scout drafts a quote request for the suppliers the buyer picks. The buyer opens it in their own email and presses Send. The agents never send anything.
 
 ## Why Switch
 
-- **One shared room.** The buyer and both agents see the same conversation.
+- **One shared room** for the buyer and both agents.
 - **Two agents, two jobs.** Scout finds suppliers. Vera checks them. They hand work over with an @mention.
-- **The human decides in the same chat** and can step in at any time.
+- **The human decides in the same chat.**
 
-It would not work without Switch, which lets people and separate agents share one room and one task. Scout and Vera run on Claude Code, under Switch Console.
+It would not work without Switch. Scout and Vera run on Claude Code, under Switch Console.
 
 ## What it will not do
 
-It never contacts a supplier, buys, or pays unless the buyer clearly says yes. It never sends email. Scout writes a draft and a link; the buyer sends it from their own email. Vera never calls a supplier "verified".
+It never contacts a supplier, buys, or pays unless the buyer clearly says yes. It never sends email. Scout writes a draft and a link; the buyer sends it from their own email.
 
 ## Try it in 5 minutes
 
-You only need Python for this quick check. You do not need Docker, Switch or Claude. It uses saved, made-up data: no key, no internet.
+You only need Python for this quick check. You do not need Docker, Switch or Claude. It uses made-up data: no key, no internet.
 
 1. Download this repo (green Code button, then Download ZIP) and unzip it.
 2. Install Python 3.10 or newer.
@@ -46,17 +46,37 @@ python tools/check_suppliers.py out/search.json --out out/checks.json
 python tools/cross_check.py abuja-seating.example
 ```
 
-5. Open `out/checks.json` to see each supplier's fit, prices and checks. Every output says it is demo data.
+5. Open `out/checks.json` to see each supplier's fit, prices and checks.
+
+Want the full chat demo with the real agents? See "Run the full chat demo" and "How we use Switch" below.
+
+More: [docs/how-it-works.md](docs/how-it-works.md), [docs/switch-feedback.md](docs/switch-feedback.md)
+
+---
+
+# Details
 
 ## Run the full chat demo
 
 The quick check lets anyone verify the tools. The full chat is for anyone who wants to run the agents themselves. The demo video shows the full chat.
 
-It needs Docker Desktop (Switch Console uses it to start the chat app), Switch Console, the Claude Code command-line tool signed in (your plan's usage limits apply), and curl and npx (the Switch setup guide lists docker, curl and npx). It was tested on Windows 11 only. First-time setup takes a while because of downloads. Steps are in [Set up the agents in Switch](#set-up-the-agents-in-switch) below.
+It needs:
 
----
+- Docker Desktop (Switch Console uses it to start the chat app).
+- Switch Console.
+- The Claude Code command-line tool, signed in (your plan's usage limits apply).
+- curl and npx (the Switch setup guide lists docker, curl and npx).
 
-# Details
+It was tested on Windows 11 only. First-time setup takes a while because of downloads. Steps are in [Set up the agents in Switch](#set-up-the-agents-in-switch).
+
+## How we use Switch
+
+- **Agents connected:** two Claude Code agents, Scout and Vera. Each has its own instructions (`agents/scout.md`, `agents/vera.md`). Switch Console runs them.
+- **Chat app:** the Mattermost that Switch Console starts.
+- **Room setup:** room instructions from `agents/room-instructions.md`; both agents added; `!assign-agent @scout` and `!follow-ups off`; "Who can talk to this agent" checked in each agent's settings.
+- **Switch features used:** shared room, @mention handoff, threads, room and agent instructions, room commands such as `!agents-status`.
+- **Real work:** finds Nigerian suppliers, checks their sites and a second source, compares listed prices with the buyer's budget, and drafts quote requests that the buyer sends.
+- **How to run it:** the [quick check](#try-it-in-5-minutes) needs only Python. For the full chat, follow [Set up the agents in Switch](#set-up-the-agents-in-switch).
 
 ## What is in this repo
 
@@ -65,16 +85,19 @@ It needs Docker Desktop (Switch Console uses it to start the chat app), Switch C
 | `tools/` | The search and checking scripts (Python standard library only). |
 | `agents/` | The instructions for Scout and Vera, and the room instructions, to paste into Switch. |
 | `demo/` | Saved made-up data for demo mode (businesses on `.example` domains). |
-| `docs/cac_flow.md` | How Vera asks the buyer for a CAC check. |
+| `docs/` | How it works (with an example conversation), notes on Switch, and the CAC step. |
 | `tests/` | A small set of offline tests for the core logic. |
+| `.github/workflows/tests.yml` | Runs the tests and demo mode on GitHub. |
 | `.env.example` | The names of the settings (no values). |
 
 ## Prerequisites
 
 - Python 3.10 or newer (tested on Python 3.14).
-- `pytest`, only to run the tests.
+- `pytest`, only to run the tests (`pip install -r requirements-dev.txt`).
 - For the full chat demo: Docker Desktop, Switch Console (tested: Canary 0.41.0-canary.2 on Windows 11), curl and npx (needed by the Switch setup), and the Claude Code command-line tool, signed in. The agents run on Claude Code, so your plan's usage limits apply.
 - For real mode: a Brave Search API key.
+
+Tested on Windows 11 only. The GitHub workflow is meant to run the tests and demo mode on Ubuntu with Python 3.10 and 3.12; it has not been seen passing yet.
 
 ## Real mode with a key
 
@@ -171,7 +194,7 @@ The tests run offline with no key and use only made-up data.
 
 **Runs**
 - A search uses at most 12 queries and a run fetches at most 150 pages. Progress is saved as it goes; rerun with `--resume` to continue a cut-off run.
-- Email drafts are for review only. The demo mode covers the scripts, not the chat agents.
+- Email drafts are for review only. Demo mode covers the scripts, not the chat agents.
 
 ## Not tested
 
