@@ -21,23 +21,19 @@ Finding a supplier you can trust takes hours. Suppliers in Nigeria are often har
 
 ## Why Switch
 
-- **One shared room** for the buyer and both agents.
-- **Two agents, two jobs.** Scout finds suppliers. Vera checks them. They hand work over with an @mention.
-- **The human decides in the same chat.**
-
-It would not work without Switch. Scout and Vera run on Claude Code, under Switch Console.
+One shared room lets the buyer and both agents see the same conversation and hand work over with an @mention. It would not work without Switch. Scout and Vera run on Claude Code, under Switch Console.
 
 ## What it will not do
 
-It never contacts a supplier, buys, or pays unless the buyer clearly says yes. It never sends email. Scout writes a draft and a link; the buyer sends it from their own email.
+It never contacts a supplier, buys or pays without the buyer's clear yes. It never sends email. Scout writes a draft and a link; the buyer sends it from their own email.
 
 ## Try it in 5 minutes
 
-You only need Python for this quick check. You do not need Docker, Switch or Claude. It uses made-up data: no key, no internet.
+You only need Python for this quick check. You do not need Docker, Switch or Claude.
 
 1. Download this repo (green Code button, then Download ZIP) and unzip it.
-2. Install Python 3.10 or newer.
-3. Open a terminal in the unzipped folder.
+2. Install Python 3.10 or newer, and open a terminal in the unzipped folder.
+3. Turn on demo mode first, so nothing runs live even if you have a Brave key. Windows PowerShell: `$env:DEMO_MODE = "1"`. macOS or Linux: `export DEMO_MODE=1`.
 4. Run these three commands:
 
 ```
@@ -46,7 +42,7 @@ python tools/check_suppliers.py out/search.json --out out/checks.json
 python tools/cross_check.py abuja-seating.example
 ```
 
-5. Open `out/checks.json` to see each supplier's fit, prices and checks.
+5. Open `out/checks.json` to see each supplier's checks.
 
 Want the full chat demo with the real agents? See "Run the full chat demo" and "How we use Switch" below.
 
@@ -106,7 +102,7 @@ Put the key in one of two places:
 - An environment variable named `BRAVE_API_KEY`.
 - A file at `~/.procuremate/secrets.env` with the line `BRAVE_API_KEY=your-key`.
 
-Then run the same three commands. For the third, use a real supplier domain. Demo mode turns on when `DEMO_MODE=1`, or automatically when no key is found. Each run ends with a short summary (seconds per stage, queries used, suppliers found). It goes to the terminal and the output file, not to the chat.
+Then run the same three commands. For the third, use a real supplier domain. Demo mode is on when `DEMO_MODE=1` or when no Brave key is found; with a key set, the commands run live unless `DEMO_MODE=1`. Each run ends with a short summary (seconds per stage, queries used, suppliers found). It goes to the terminal and the output file, not to the chat.
 
 To search other places, add `--allow-elsewhere` (up to 3 nearby towns) or `--supplier-regions "Abuja,Lagos"`.
 
