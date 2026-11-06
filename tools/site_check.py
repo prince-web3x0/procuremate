@@ -25,7 +25,6 @@ from products import (  # noqa: F401  (re-exported for callers and tests)
     search_fit_evidence,
     term_pattern as _term_pattern,
 )
-from replay import load_bundle, notice, replay_path, replay_site_check
 from common import (
     polite_fetcher,
     NETWORK_ERROR,
@@ -240,25 +239,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--max-pages", type=int, default=MAX_PAGES)
     parser.add_argument("--product", help="what the buyer wants (e.g. 'office chairs'); adds product fit and matching prices")
     parser.add_argument("--out", help="write JSON here instead of stdout")
-    parser.add_argument("--replay", help="read this domain's saved site check from a replay bundle (or use replay_ctl.py on): no site is fetched")
     args = parser.parse_args(argv)
-    replay = replay_path(args.replay)
-    if replay:
-        try:
-            bundle = load_bundle(replay)
-            report = replay_site_check(bundle, normalize_domain(args.domain))
-        except ValueError as err:
-            print(f"Error: {err}", file=sys.stderr)
-            return 2
-        print(notice(bundle), file=sys.stderr)
-        text = json.dumps(report, indent=2, ensure_ascii=False)
-        if args.out:
-            with open(args.out, "w", encoding="utf-8") as handle:
-                handle.write(text)
-        else:
-            sys.stdout.reconfigure(encoding="utf-8")
-            print(text)
-        return 0
     report = check_site(args.domain, polite_fetcher(min(args.max_pages, MAX_PAGES)), args.product)
     text = json.dumps(report, indent=2, ensure_ascii=False)
     if args.out:

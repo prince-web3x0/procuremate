@@ -27,7 +27,6 @@ from typing import Any, Callable
 from delivery import delivery_label
 from budget import Budget, QueryCache, guarded, print_line as print_budget
 from progress import ProgressFile, progress_path
-from replay import load_bundle, notice, replay_path, replay_search, replay_speed
 from relevance import is_known_overseas, search_text_is_nigerian
 from regions import CITY_PROFILES, location_terms, profile_for as _profile, regions_in  # noqa: F401
 from site_check import product_terms, search_fit_evidence
@@ -889,24 +888,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--out", help="write JSON here (also written after every query, so a cut-off run leaves partial results)")
     parser.add_argument("--resume", action="store_true", help="continue a cut-off run from the partial --out file without repeating its queries")
     parser.add_argument("--progress", help="progress file (default: next to --out, as <name>.progress.json); print it with progress.py")
-    parser.add_argument("--replay", help="replay a saved live run from this bundle (or set REPLAY_FILE): no Brave call, no site fetched; see save_replay.py")
-    parser.add_argument("--replay-speed", type=float, help="replay speed-up for the stage timings (default 5, or REPLAY_SPEED)")
     args = parser.parse_args(argv)
-    replay = replay_path(args.replay)
-    if replay:
-        try:
-            bundle = load_bundle(replay)
-        except ValueError as err:
-            print(f"Error: {err}", file=sys.stderr)
-            return 2
-        print(notice(bundle), file=sys.stderr)
-        report = replay_search(bundle, ProgressFile(args.progress or progress_path(args.out), "scout_search"), replay_speed(args.replay_speed))
-        if args.out:
-            _write_json(args.out, report)
-        else:
-            sys.stdout.reconfigure(encoding="utf-8")
-            print(json.dumps(report, indent=2, ensure_ascii=False))
-        return 0
     cache: dict[str, list[dict[str, str]]] = {}
     if args.resume and args.out and os.path.exists(args.out):
         with open(args.out, encoding="utf-8") as handle:

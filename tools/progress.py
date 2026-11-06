@@ -57,7 +57,6 @@ class ProgressFile:
         self._stage_began = self._began
         self._last = self._began
         self._expected_stage_seconds: float | None = None
-        self.notice: str | None = None  # set during a replay: shown in every progress line
 
     def update(self, stage: str, done: int, total: int | None, found: int, finished: bool = False, interrupted: bool = False,
                phase: int | None = None, total_is_maximum: bool = False) -> dict[str, Any]:
@@ -79,8 +78,6 @@ class ProgressFile:
             "estimated_seconds_remaining": remaining, "over_estimate": over,
             "finished": finished, "interrupted": interrupted,
         }
-        if self.notice:
-            data["replay"] = self.notice
         self._last = now
         if self._path:
             _write_json(self._path, data)
@@ -95,9 +92,8 @@ def _approx(seconds: float) -> str:
 
 
 def describe(p: dict[str, Any]) -> str:
-    """One plain-English line from a progress dict. Uses only what the file says; a replay says so first."""
-    line = _describe(p)
-    return f"{p['replay']}: {line}" if p.get("replay") else line
+    """One plain-English line from a progress dict. Uses only what the file says."""
+    return _describe(p)
 
 
 def _describe(p: dict[str, Any]) -> str:

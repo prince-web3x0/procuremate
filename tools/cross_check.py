@@ -21,7 +21,6 @@ from typing import Any, Callable
 
 from common import OK, Fetcher, PageCache, default_cache_dir, polite_fetcher, SecretError, load_secret, normalize_domain, now_iso, parse_html
 from budget import BUDGET_REACHED, Budget, QueryCache, guarded, print_line as print_budget
-from replay import load_bundle, notice, replay_cross_check, replay_path
 from demo import DEMO_NOTICE, demo_domains, demo_requested, make_opener, make_rdap, make_search
 from scout_search import SearchError, SearchFn, brave_search, classify, paced
 from site_check import collect_pages, extract_fields
@@ -400,26 +399,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("domain")
     parser.add_argument("--out", help="write JSON here instead of stdout")
-    parser.add_argument("--replay", help="read this domain's saved cross-check from a replay bundle (or set REPLAY_FILE): no Brave call, no site fetched")
     args = parser.parse_args(argv)
-    replay = replay_path(args.replay)
-    if replay:
-        try:
-            bundle = load_bundle(replay)
-            report = replay_cross_check(bundle, normalize_domain(args.domain))
-        except ValueError as err:
-            print(f"Error: {err}", file=sys.stderr)
-            return 2
-        print(notice(bundle), file=sys.stderr)
-        text = json.dumps(report, indent=2, ensure_ascii=False)
-        if args.out:
-            os.makedirs(os.path.dirname(os.path.abspath(args.out)), exist_ok=True)
-            with open(args.out, "w", encoding="utf-8") as handle:
-                handle.write(text)
-        else:
-            sys.stdout.reconfigure(encoding="utf-8")
-            print(text)
-        return 0
     # Demo mode: DEMO_MODE=1, or no key when the domain is one of the demo fixtures.
     demo = demo_requested()
     search_fn: SearchFn | None = None

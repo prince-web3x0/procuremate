@@ -6,7 +6,7 @@ Built for the Flip the Switch hackathon (Best Business Workflow track).
 
 ProcureMate helps a buyer in Nigeria find and check Nigerian suppliers for an order. Two AI agents do the research in a shared chat room. The buyer makes every decision.
 
-[Demo video (link coming soon)](#). The video replays a saved real run so the timing is predictable; the agents' messages are live.
+[Demo video (link coming soon)](#). The video is a real live run, sped up where the agents were waiting.
 
 ## The problem
 
@@ -92,7 +92,7 @@ It was tested on Windows 11 only. First-time setup takes a while because of down
 
 - Python 3.10 or newer (tested on Python 3.14).
 - `pytest`, only to run the tests (`pip install -r requirements-dev.txt`).
-- For the full chat demo: Docker Desktop, Switch Console (tested: Canary 0.41.0-canary.2 on Windows 11), curl and npx (needed by the Switch setup), and the Claude Code command-line tool, signed in. The agents run on Claude Code, so your plan's usage limits apply.
+- For the full chat demo: Docker Desktop, Switch Console (tested: Canary 0.41.0-canary.2 and 0.41.0-canary.3 on Windows 11), curl and npx (needed by the Switch setup), and the Claude Code command-line tool, signed in. The agents run on Claude Code, so your plan's usage limits apply.
 - For real mode: a Brave Search API key.
 
 The full chat was tested on Windows 11 only. The tests and demo mode passed on Ubuntu with Python 3.10 and 3.12 in GitHub Actions (run of 2026-11-05).
@@ -140,7 +140,6 @@ Vera never queries the Corporate Affairs Commission (CAC) register by machine. W
 | `PROCUREMATE_CACHE_DIR` | Move the shared cache folder. |
 | `MAX_BRAVE_QUERIES` | Brave query cap for a whole task (default 20). |
 | `BRAVE_PRICE_PER_1000` | Price used for the cost estimate (default 5, in US dollars). |
-| `REPLAY_FILE`, `REPLAY_SPEED` | Replay a saved run (see below). |
 
 ## Tools
 
@@ -153,7 +152,6 @@ Vera never queries the Corporate Affairs Commission (CAC) register by machine. W
 | `decisions.py` | Remembers the buyer's choices: shortlist, exclude, add, recheck, "go with N". | `python tools/decisions.py add newcomer-seats.example` |
 | `mail_link.py` | Turns a quote draft into a mail-app link and a Gmail link. It sends nothing. | `python tools/mail_link.py --to sales@example.ng --subject "Quote request" --body "Hello, please quote 20 chairs."` |
 | `progress.py` | Prints a run's progress as one line and says when a chat update is due. | `python tools/progress.py out/checks.progress.json --wait 60` |
-| `save_replay.py`, `replay_ctl.py` | Save a finished live run; switch replay on or off. | `python tools/replay_ctl.py status` |
 | `sync_to_agents.py` | Copies `tools/` into the agents' folders. | `python tools/sync_to_agents.py --dest <scout folder> <vera folder>` |
 
 ## Cost and demo
@@ -161,11 +159,7 @@ Vera never queries the Corporate Affairs Commission (CAC) register by machine. W
 - **Queries per run.** One search uses up to 12 Brave queries. Cross-checks add up to 2 each for the top 5 suppliers. Each tool prints the queries used and an estimated cost at $5 per 1,000 requests. It is an estimate, not a bill.
 - **Cap.** `MAX_BRAVE_QUERIES` (default 20) covers a whole task, across both agents. At the cap the tools say "search budget reached" and the agents work with what they have.
 - **Cache.** For 24 hours, both agents share saved search results, pages, cross-checks and domain-age answers, so repeating a request costs no queries. It lives in a per-user folder outside git (`%LOCALAPPDATA%\procuremate-ai` on Windows, `~/.cache/procuremate-ai` elsewhere). Check Brave's terms on caching before relying on it.
-- **Replay.** `python tools/save_replay.py --search out/search.json --checks out/checks.json` saves a finished live run. `python tools/replay_ctl.py on <bundle>` makes the tools read it instead of calling Brave or fetching sites, with the stage timings sped up 5x (`REPLAY_SPEED`). `off` returns to live data; `status` shows which.
-- **Why a switch file.** The agents' commands may not receive environment variables from your shell, so replay is switched by a file in the shared cache folder that both agents read. Order of control: `--replay`, then `REPLAY_FILE`, then the file.
-- **Always labelled.** Every tool prints "REPLAY of a live run saved on <date>" while replay is on. Turn it off before a live run.
-- **Demo mode vs replay.** Demo mode uses the repo's made-up data and is safe to share. Replay uses a real saved run, so its data stays on your machine.
-- **Never commit a replay bundle.** It holds real businesses' public contact details.
+- **Demo mode.** It uses the made-up data in `demo/`. It makes no queries and costs nothing.
 
 ## Run the tests
 
@@ -193,28 +187,34 @@ The tests run offline with no key and use only made-up data.
 **Runs**
 - A search uses at most 12 queries and a run fetches at most 150 pages. Progress is saved as it goes; rerun with `--resume` to continue a cut-off run.
 - Email drafts are for review only. Demo mode covers the scripts, not the chat agents.
+- Old output files can be read by mistake. Clear the out/ folders before each live run.
+- A stop request may only be read when the agent's current step ends.
+- The 'Open in my mail app' link may do nothing. Use the Gmail link or copy the text.
 
-## Not tested
+## What we tested
 
 Seen working in real chat rooms:
-- Scout handing work to Vera with an @mention.
-- Progress updates posted during runs (with some gaps).
-- Vera running her own checks from a domain list, and the page cache shared by both agents.
-- Vera reading a CAC result screenshot from the buyer.
-- Quote drafts and the Gmail compose link (it opened with recipient, subject and text filled in).
-- A plain message with no @ answered only by Scout after `!assign-agent @scout` and `!follow-ups off`.
+- Scout hands work to Vera with an @mention.
+- Both agents post progress while they work.
+- Vera runs her own checks. Both agents share one page cache.
+- Vera reads a CAC result screenshot from the buyer.
+- A full live run: Vera's review came about 6 minutes after the request. Some pages were cached, so a first run can be slower.
+- Shortlists with price, phone and email. No invented suppliers.
+- Quote drafts. Nothing is sent.
+- The Gmail link opens a ready-to-send email.
+- Decisions: add, exclude and "go with 1" each updated the decisions list.
+- A message with no @ goes only to Scout, after "!assign-agent @scout" and "!follow-ups off".
+- Tests and demo mode pass on Ubuntu (Python 3.10 and 3.12).
+- The full chat works on Windows 11 with Switch Console Canary 0.41.0-canary.2 and 0.41.0-canary.3.
 
-Not tested:
-- The replay switch file with the real agents.
-- The decision step (shortlist, exclude, go with N) in a real room.
-- A full live run after the latest changes.
-- macOS and Linux, and Switch Console without Docker.
-- The `mailto:` link (mail app).
-- Agents following the instructions over a long conversation (not fully tested).
+Not tested yet:
+- macOS, Linux, and Switch Console without Docker.
+- Long conversations with the agents.
+- The "Open in my mail app" link did nothing when clicked. The Gmail link works.
 
 ## Safety rules
 
-- No secrets are stored in the repo. `.gitignore` excludes `.env`, `secrets.env`, generated output and replay bundles.
+- No secrets are stored in the repo. `.gitignore` excludes `.env`, `secrets.env` and generated output.
 - Keys are never printed.
 - The tools respect `robots.txt`. They use no logins, solve no CAPTCHAs, and do not scrape social sites.
 - Text from web pages is treated as data, never as instructions.

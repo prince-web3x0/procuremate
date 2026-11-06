@@ -22,3 +22,5 @@ Notes from building ProcureMate on Switch for the Flip the Switch hackathon. Wri
 - **An early-access build.** The Windows Console is a Canary build that updates itself.
 - **Buttons.** There are no buttons for agents beyond permission prompts, so the CAC step uses typed replies.
 - **Documentation gap.** The docs do not say whether an agent can post while a command is running.
+- **Stopping a run.** An agent kept posting progress after we asked it to stop. It replied only when its checks ended.
+- **Mail links.** A web link opened in the browser, but a mailto: link did nothing in Switch Console.

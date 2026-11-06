@@ -29,7 +29,6 @@ from cross_check import MAX_INDEPENDENT_PAGES, GetJson, _cached_http_json, cross
 from delivery import LABELS, delivery_label
 from budget import BUDGET_REACHED, Budget, CrossCheckCache, QueryCache, guarded, print_line as print_budget
 from progress import ProgressFile, progress_path
-from replay import load_bundle, notice, replay_checks, replay_path, replay_speed
 from relevance import is_known_overseas, nigeria_evidence
 from regions import based_in as find_based_in, location_terms, profile_for, regions_in
 from scout_search import SearchError, SearchFn, _write_json, brave_search, classify, count_unsupported, paced
@@ -573,25 +572,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--out", help="write JSON here (also written after every supplier, so a cut-off run leaves partial results)")
     parser.add_argument("--resume", action="store_true", help="continue a cut-off run from the partial --out file")
     parser.add_argument("--progress", help="progress file (default: next to --out, as <name>.progress.json); print it with progress.py")
-    parser.add_argument("--replay", help="replay a saved live run from this bundle (or set REPLAY_FILE): no Brave call, no site fetched; see save_replay.py")
-    parser.add_argument("--replay-speed", type=float, help="replay speed-up for the stage timings (default 5, or REPLAY_SPEED)")
     args = parser.parse_args(argv)
-    replay = replay_path(args.replay)
-    if replay:
-        try:
-            bundle = load_bundle(replay)
-        except ValueError as err:
-            print(f"Error: {err}", file=sys.stderr)
-            return 2
-        print(notice(bundle), file=sys.stderr)
-        wanted = parse_domains(args.domains) if args.domains else None
-        report = replay_checks(bundle, ProgressFile(args.progress or progress_path(args.out), "check_suppliers"), replay_speed(args.replay_speed), domains=wanted)
-        if args.out:
-            _write_json(args.out, report)
-        else:
-            sys.stdout.reconfigure(encoding="utf-8")
-            print(json.dumps(report, indent=2, ensure_ascii=False))
-        return 0
     if args.domains:
         domains = parse_domains(args.domains)
         if not domains or not args.city or not args.product:
