@@ -49,7 +49,11 @@ def main(argv: list[str] | None = None) -> int:
     group.add_argument("--body")
     group.add_argument("--body-file", help="read the body from this UTF-8 file")
     args = parser.parse_args(argv)
-    body = args.body if args.body is not None else open(args.body_file, encoding="utf-8").read()
+    if args.body is not None:
+        body = args.body
+    else:
+        with open(args.body_file, encoding="utf-8") as handle:
+            body = handle.read()
     try:
         result = build_links(args.to, args.subject, body)
     except ValueError as err:

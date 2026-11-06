@@ -27,7 +27,7 @@ One shared room lets the buyer and both agents see the same conversation and han
 
 ## What it will not do
 
-It never contacts a supplier, buys or pays without the buyer's clear yes. It never sends email. Scout writes a draft and a link; the buyer sends it from their own email.
+It never messages a supplier, buys or pays without the buyer's clear yes. It never sends email. Scout writes a draft and a link; the buyer sends it from their own email.
 
 ## Try it in 5 minutes
 
@@ -45,6 +45,8 @@ python tools/cross_check.py abuja-seating.example
 ```
 
 5. Open `out/checks.json` to see each supplier's checks.
+
+On macOS or Linux, type python3 instead of python.
 
 More: [docs/how-it-works.md](docs/how-it-works.md), [docs/switch-feedback.md](docs/switch-feedback.md)
 
@@ -158,6 +160,7 @@ Vera never queries the Corporate Affairs Commission (CAC) register by machine. W
 - **Cap.** `MAX_BRAVE_QUERIES` (default 20) covers a whole task, across both agents. At the cap the tools say "search budget reached" and the agents work with what they have.
 - **Cache.** For 24 hours, both agents share saved search results, pages, cross-checks and domain-age answers, so repeating a request costs no queries. It lives in a per-user folder outside git (`%LOCALAPPDATA%\procuremate-ai` on Windows, `~/.cache/procuremate-ai` elsewhere). Check Brave's terms on caching before relying on it.
 - **Demo mode.** It uses the made-up data in `demo/`. It makes no queries and costs nothing.
+- **Cap reached.** A full first live run can reach the cap of 20 queries. Then the tools say 'search budget reached' and the agents work with what they have.
 
 ## Run the tests
 
@@ -165,7 +168,7 @@ Vera never queries the Corporate Affairs Commission (CAC) register by machine. W
 python -m pytest tests
 ```
 
-The tests run offline with no key and use only made-up data.
+The tests run offline with no key and use only made-up data. If pytest is missing, run: python -m pip install pytest (on macOS or Linux: python3 -m pip install pytest).
 
 ## Limits
 
