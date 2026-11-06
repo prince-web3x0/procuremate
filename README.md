@@ -6,7 +6,7 @@ Built for the Flip the Switch hackathon (Best Business Workflow track).
 
 ProcureMate helps a buyer in Nigeria find and check Nigerian suppliers for an order. Two AI agents do the research in a shared chat room. The buyer makes every decision.
 
-[Demo video (link coming soon)](#). The video is a real live run, sped up where the agents were waiting.
+[Watch the demo video (2 min 40 s)](https://youtu.be/E_xxfIah5gI). The video is a real live run, sped up where the agents were waiting. For readable chat text, set the player quality to 1080p.
 
 ## The problem
 
@@ -45,8 +45,6 @@ python tools/cross_check.py abuja-seating.example
 ```
 
 5. Open `out/checks.json` to see each supplier's checks.
-
-Want the full chat demo with the real agents? See "Run the full chat demo" and "How we use Switch" below.
 
 More: [docs/how-it-works.md](docs/how-it-works.md), [docs/switch-feedback.md](docs/switch-feedback.md)
 
